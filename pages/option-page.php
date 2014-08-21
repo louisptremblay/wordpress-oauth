@@ -1,14 +1,13 @@
 <?php
 /**
- * WordPress Mobile Oauth Options Page
- *
+ * OAuth Server Options/Settings Page
  * @author Justin Greer <justin@justin-greer.com>
- * @package WordPress Mobile Oauth
+ * @package WordPress OAuth2 Server
  */
-function my_plugin_page (){ ?>
+function wp_oauth_server_options (){ ?>
 
 	<div class="wrap">
-		<h2>Mobile OAuth Settings</h2>
+		<h2>OAuth Server Settings</h2>
 
 		<form method="post" action="options.php"> 
 

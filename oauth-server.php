@@ -1,18 +1,13 @@
 <?php
 /**
- * Plugin Name: WordPress Mobile Oauth
- * Plugin URI: http://justin-greer.com/projects/wordpress-mobile-oauth-lite
+ * Plugin Name: WordPress OAuth2 Server
+ * Plugin URI: 
  * Version: 1.0.0
- * Description: WordPress Mobile Oauth gives WordPress the ability to store sessions so that you can authicate mobile application users like Facebook and Google.
+ * Description:
  * Author: Justin Greer
  * Author URI: http://justin-greer.com
  * License: GPL2
- * Text Domain: wp-mobile-oauth
- *
- * Lite Version Features:
- *
- * - Single Device Session Handling
- * - Registered users can login/register using their username and password.
+ * Text Domain: wp-oauth-server
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,13 +17,13 @@
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  *
- * @package  WordPress Mobile Oauth Lite
+ * @package WordPress OAuth2 Server
  * @author  Justin Greer <justin@justin-greer.com>
  * @copyright  Justin Greer Interactive, LLC 2014
 */
 
-$wp_mobile_oauth = new WP_Mobile_Oauth;
-class WP_Mobile_Oauth
+$OAuth_Server = new WP_OAuth_Server;
+class WP_OAuth_Server
 {
 
 	/**
@@ -36,12 +31,6 @@ class WP_Mobile_Oauth
 	 * @var String
 	 */
 	static $version = "1.0.0";
-
-	/**
-	 * WordPress Mobile Oauth Table Name
-	 * @var String
-	 */
-	static $wp_mobile_oauth_table_name = "wp_mobile_oauth_sessions";
 
 	/**
 	 * WordPress Mobile Oauth construct method
@@ -73,30 +62,12 @@ class WP_Mobile_Oauth
 	}
 
 	/**
-	 * Install WP Mobile Oauth
-	 *
-	 * @since 1.0.0
-	 * @return No Return
+	 * Install WP OAuth2 Server Database Tables
+	 * @todo Add install script once things settle down
 	 */
 	static function _install ()
 	{
-		global $wpdb;
-		$table_name = $wpdb->prefix . self::$wp_mobile_oauth_table_name;
-
-		// Check to see if the sessions table is already installed
-		if($wpdb->get_var("show tables like '$table_name'") != $table_name) 
-		{
-			$sql = "CREATE TABLE " . $table_name . " (
-			`session_id` int NOT NULL AUTO_INCREMENT,
-			`session_token_id` varchar(36) NOT NULL,
-			`session_user_id` int(11) NOT NULL,
-			`session_created` datetime NOT NULL,
-			UNIQUE KEY session_id (session_id)
-			);";
-	 
-			require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-			dbDelta($sql);
-		}
+	
 	}
 
 	/**
@@ -106,8 +77,8 @@ class WP_Mobile_Oauth
 	function _options_page ()
 	{
 		// Options/Settings Page
-		add_options_page('Mobile Oauth', 'Mobile Oauth', 'manage_options', "mobile-oauth-settings" , 'my_plugin_page');
-		add_menu_page( 'Mobile OAuth', 'Mobile OAuth', 'manage_options', 'wp-mobile-oauth/pages/option-page.php', '', plugins_url( 'myplugin/images/icon.png' ), null );
+		add_options_page('OAuth Server', 'OAuth Server', 'manage_options', "oauth-server-settings" , 'wp_oauth_server_options');
+		//add_menu_page( 'OAuth Server', 'Mobile Sessions', 'manage_options', 'wp-mobile-oauth/pages/option-page.php', '', plugins_url( 'myplugin/images/icon.png' ), null );
 	}
 
 }
